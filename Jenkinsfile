@@ -6,6 +6,7 @@ pipeline {
 
     parameters{
         choice(name: 'action', choices: 'Create\nDelete', description: 'Choose Create/Destroy')
+        string(name: 'AppName', defaultValue: 'Spring-Boot-app', description: 'Name of the docker image')
     }
 
     stages {
@@ -64,7 +65,7 @@ pipeline {
         stage("Docker Image Build") {
           when { expression { params.action == 'Create' } }     
             environment {
-              AppName = 'mysec-app'
+            //   AppName = 'mysec-app'
               DockerHubUser = 'raiyan'
             }
             steps {
