@@ -6,7 +6,7 @@ pipeline {
 
     parameters{
         choice(name: 'action', choices: 'Create\nDelete', description: 'Choose Create/Destroy')
-        string(name: 'AppName', defaultValue: 'Spring-Boot-app', description: 'Name of the docker image')
+        string(name: 'AppName', defaultValue: 'spring-boot-app', description: 'Name of the docker image in lower case')
     }
 
     stages {
