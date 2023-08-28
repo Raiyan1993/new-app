@@ -27,5 +27,12 @@ pipeline {
                 }
             }
         } 
+        stage("Static Code Analysis: SonarQube") {
+            steps {
+                script{
+                    StaticCodeAnalysis()
+                }
+            }
+        }
     }
 }
