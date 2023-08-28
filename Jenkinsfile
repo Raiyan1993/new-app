@@ -35,5 +35,13 @@ pipeline {
                 }
             }
         }
+        stage("Sonar Quality Gate Check") {
+            steps {
+                script{
+                    def SonarQubeCreds = 'sonar-api'
+                    SonarQualityGate(SonarQubeCreds)
+                }
+            }
+        }
     }
 }
