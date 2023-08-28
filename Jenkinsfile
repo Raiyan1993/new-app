@@ -58,7 +58,7 @@ pipeline {
             steps {
                 script{
                     def dockerImageTag = env.BUILD_NUMBER
-                    BuildDocker(AppName, dockerImageTag, DockerHubUser)
+                    BuildDocker(DockerHubUser, AppName, dockerImageTag)
                 }
             }
         }
