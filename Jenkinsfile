@@ -1,19 +1,26 @@
 @Library('my-shared-library') _
 
 pipeline {
+
     agent any
+
+    parameters{
+        choice(name: 'action', choices: 'Create\nDelete', Description: 'Choose Create/Destroy')
+    }
+
     stages {
-        stage("Git Checkout") {
-            steps {
-                script{
-                    gitCheckout(
-                        branch: "master",
-                        url: "https://github.com/Raiyan1993/new-app.git"
-                    )
-                }
-            }
-        }
+        // stage("Git Checkout") {
+        //     steps {
+        //         script{
+        //             gitCheckout(
+        //                 branch: "master",
+        //                 url: "https://github.com/Raiyan1993/new-app.git"
+        //             )
+        //         }
+        //     }
+        // }
         stage("Unit Test maven") {
+          when { expression { params.action == 'Create' } }    
             steps {
                 script{
                     mvnTest()
@@ -21,6 +28,7 @@ pipeline {
             }
         }    
         stage("maven integrationTest") {
+          when { expression { params.action == 'Create' } }     
             steps {
                 script{
                     mvnIntergrationTest()
@@ -28,6 +36,7 @@ pipeline {
             }
         } 
         stage("Static Code Analysis: SonarQube") {
+          when { expression { params.action == 'Create' } }     
             steps {
                 script{
                     def SonarQubeCreds = 'sonar-api'
@@ -36,6 +45,7 @@ pipeline {
             }
         }
         stage("Sonar Quality Gate Check") {
+          when { expression { params.action == 'Create' } }     
             steps {
                 script{
                     def SonarQubeCreds = 'sonar-api'
@@ -44,6 +54,7 @@ pipeline {
             }
         }
         stage("Maven Build") {
+          when { expression { params.action == 'Create' } }     
             steps {
                 script{
                     mvnBuild()
@@ -51,6 +62,7 @@ pipeline {
             }
         }
         stage("Docker Image Build") {
+          when { expression { params.action == 'Create' } }     
             environment {
               AppName = 'mysec-app'
               DockerHubUser = 'raiyan'
