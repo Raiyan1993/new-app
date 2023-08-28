@@ -30,7 +30,7 @@ pipeline {
         stage("Static Code Analysis: SonarQube") {
             steps {
                 script{
-                    def SonarQubeCreds = 'sonar'
+                    def SonarQubeCreds = 'sonar-api'
                     StaticCodeAnalysis(SonarQubeCreds)
                 }
             }
