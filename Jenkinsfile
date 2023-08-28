@@ -53,15 +53,14 @@ pipeline {
         stage("Docker Image Build") {
             environment {
               AppName = 'mysec-app'
-              ImageTag = env.BUILD_NUMBER
               DockerHubUser = 'raiyan'
-
+            }
             steps {
                 script{
-                    BuildDocker(AppName, ImageTag, DockerHubUser)
+                    def dockerImageTag = env.BUILD_NUMBER
+                    BuildDocker(AppName, dockerImageTag, DockerHubUser)
                 }
             }
-            }  
         }
     }    
 }
