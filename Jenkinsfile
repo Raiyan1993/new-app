@@ -7,8 +7,8 @@ pipeline {
             steps {
                 script{
                     gitCheckout(
-                        branch: "main",
-                        url: "https://github.com/Raiyan1993/my-cicd-pipeline.git"
+                        branch: "master",
+                        url: "https://github.com/Raiyan1993/new-app.git"
                     )
                 }
             }
