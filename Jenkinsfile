@@ -49,6 +49,18 @@ pipeline {
                     mvnBuild()
                 }
             }
-        } 
+        }
+        stage("Docker Image Build") {
+            environment {
+              AppName = 'mysec-app'
+              ImageTag = env.BUILD_NUMBER
+              DockerHubUser = 'raiyan'
+
+            steps {
+                script{
+                    BuildDocker(AppName, ImageTag, DockerHubUser)
+                }
+            }
+        }  
     }
 }
