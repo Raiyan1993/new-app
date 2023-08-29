@@ -76,5 +76,13 @@ pipeline {
                 }
             }
         }
+        stage("Docker Image Cleanup") {
+            steps {
+                script{
+                    def dockerImageTag = env.BUILD_NUMBER
+                    DockerImageCleanup(env.aws_account_id, "${params.AppName}", dockerImageTag, env.region)
+                }
+            }
+        }
     }    
 }
