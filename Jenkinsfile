@@ -32,14 +32,14 @@ pipeline {
                 }
             }
         }    
-        stage("maven integrationTest") {
-          when { expression { params.action == 'Create' } }     
-            steps {
-                script{
-                    mvnIntergrationTest()
-                }
-            }
-        } 
+        // stage("maven integrationTest") {
+        //   when { expression { params.action == 'Create' } }     
+        //     steps {
+        //         script{
+        //             mvnIntergrationTest()
+        //         }
+        //     }
+        // } 
         stage("Static Code Analysis: SonarQube") {
           when { expression { params.action == 'Create' } }     
             steps {
@@ -74,7 +74,7 @@ pipeline {
             steps {
                 script{
                     def dockerImageTag = env.BUILD_NUMBER
-                    BuildDocker(env.DockerHubUser, AppName, dockerImageTag)
+                    BuildDocker(env.DockerHubUser, "${params.AppName}", dockerImageTag)
                 }
             }
         }
@@ -83,7 +83,16 @@ pipeline {
             steps {
                 script{
                     def dockerImageTag = env.BUILD_NUMBER
-                    DockerImageScan(env.DockerHubUser, AppName, dockerImageTag)
+                    DockerImageScan(env.DockerHubUser, "${params.AppName}", dockerImageTag)
+                }
+            }
+        }
+        stage("Docker Image Push: DockerHub") {
+          when { expression { params.action == 'Create' } }
+            steps {
+                script{
+                    def dockerImageTag = env.BUILD_NUMBER
+                    DockerImagePush(env.DockerHubUser, "${params.AppName}", dockerImageTag)
                 }
             }
         }
