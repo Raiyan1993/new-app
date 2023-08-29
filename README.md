@@ -10,4 +10,5 @@
    eg, trivy image "image_name"
 
 **Command to Start the SonarQube, if SQ didn't came up**
+
 su -c '/home/sonarqube/sonarqube-9.9.1.69595/bin/linux-x86-64/sonar.sh start' sonarqube
