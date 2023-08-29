@@ -69,7 +69,7 @@ pipeline {
         }
         stage("Docker Image Push: ECR") {
           when { expression { params.action == 'Create' } }
-            steps {aws_account_id
+            steps {
                 script{
                     def dockerImageTag = env.BUILD_NUMBER
                     DockerImagePush(env.aws_account_id, "${params.AppName}", dockerImageTag, env.region)
