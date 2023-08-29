@@ -49,11 +49,8 @@ pipeline {
                 }
             }
         }
-        stage("Docker Image Build") {
+        stage("Docker Image Build: ECR") {
           when { expression { params.action == 'Create' } }     
-            // environment {
-            //   DockerHubUser = 'raiyan'
-            // }
             steps {
                 script{
                     def dockerImageTag = env.BUILD_NUMBER
@@ -61,23 +58,23 @@ pipeline {
                 }
             }
         }
-        // stage("Docker Image Scan: Trivy") {
-        //   when { expression { params.action == 'Create' } }
-        //     steps {
-        //         script{
-        //             def dockerImageTag = env.BUILD_NUMBER
-        //             DockerImageScan(env.aws_account_id, "${params.AppName}", dockerImageTag)
-        //         }
-        //     }
-        // }
-        // stage("Docker Image Push: ECR") {
-        //   when { expression { params.action == 'Create' } }
-        //     steps {aws_account_id
-        //         script{
-        //             def dockerImageTag = env.BUILD_NUMBER
-        //             DockerImagePush(env.aws_account_id, "${params.AppName}", dockerImageTag)
-        //         }
-        //     }
-        // }
+        stage("Docker Image Scan: Trivy") {
+          when { expression { params.action == 'Create' } }
+            steps {
+                script{
+                    def dockerImageTag = env.BUILD_NUMBER
+                    DockerImageScan(env.aws_account_id, "${params.AppName}", dockerImageTag, env.region)
+                }
+            }
+        }
+        stage("Docker Image Push: ECR") {
+          when { expression { params.action == 'Create' } }
+            steps {aws_account_id
+                script{
+                    def dockerImageTag = env.BUILD_NUMBER
+                    DockerImagePush(env.aws_account_id, "${params.AppName}", dockerImageTag, env.region)
+                }
+            }
+        }
     }    
 }
