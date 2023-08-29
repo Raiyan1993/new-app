@@ -1,0 +1,82 @@
+@Library('my-shared-library') _
+
+pipeline {
+
+    agent any
+
+    parameters{
+        choice(name: 'action', choices: 'Create\nDelete', description: 'Choose Create/Destroy')
+        string(name: 'AppName', defaultValue: 'myjava-app', description: 'Name of the docker image in lower case')
+    }
+
+    environment {
+        aws_account_id = '944820253794'
+    }
+
+    stages {
+        stage("Unit Test maven") {
+          when { expression { params.action == 'Create' } }    
+            steps {
+                script{
+                    mvnTest()
+                }
+            }
+        }  
+        stage("Static Code Analysis: SonarQube") {
+          when { expression { params.action == 'Create' } }     
+            steps {
+                script{
+                    def SonarQubeCreds = 'sonar-api'
+                    StaticCodeAnalysis(SonarQubeCreds)
+                }
+            }
+        }
+        stage("Sonar Quality Gate Check") {
+          when { expression { params.action == 'Create' } }     
+            steps {
+                script{
+                    def SonarQubeCreds = 'sonar-api'
+                    SonarQualityGate(SonarQubeCreds)
+                }
+            }
+        }
+        stage("Maven Build") {
+          when { expression { params.action == 'Create' } }     
+            steps {
+                script{
+                    mvnBuild()
+                }
+            }
+        }
+        stage("Docker Image Build") {
+          when { expression { params.action == 'Create' } }     
+            // environment {
+            //   DockerHubUser = 'raiyan'
+            // }
+            steps {
+                script{
+                    def dockerImageTag = env.BUILD_NUMBER
+                    BuildDocker(env.aws_account_id, "${params.AppName}", dockerImageTag)
+                }
+            }
+        }
+        // stage("Docker Image Scan: Trivy") {
+        //   when { expression { params.action == 'Create' } }
+        //     steps {
+        //         script{
+        //             def dockerImageTag = env.BUILD_NUMBER
+        //             DockerImageScan(env.aws_account_id, "${params.AppName}", dockerImageTag)
+        //         }
+        //     }
+        // }
+        // stage("Docker Image Push: ECR") {
+        //   when { expression { params.action == 'Create' } }
+        //     steps {aws_account_id
+        //         script{
+        //             def dockerImageTag = env.BUILD_NUMBER
+        //             DockerImagePush(env.aws_account_id, "${params.AppName}", dockerImageTag)
+        //         }
+        //     }
+        // }
+    }    
+}
