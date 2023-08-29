@@ -6,6 +6,7 @@
 4. mvn install (deploy artifact to local maven repository)
 5. Build Docker image
 6. Scan docker image using trivy
+
    eg, trivy image "image_name"
 
 **Command to Start the SonarQube, if SQ didn't came up**
