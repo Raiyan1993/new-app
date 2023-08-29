@@ -9,6 +9,10 @@ pipeline {
         string(name: 'AppName', defaultValue: 'spring-boot-app', description: 'Name of the docker image in lower case')
     }
 
+    environment {
+        DockerHubUser = 'raiyan'
+    }
+
     stages {
         // stage("Git Checkout") {
         //     steps {
@@ -64,14 +68,22 @@ pipeline {
         }
         stage("Docker Image Build") {
           when { expression { params.action == 'Create' } }     
-            environment {
-            //   AppName = 'mysec-app'
-              DockerHubUser = 'raiyan'
-            }
+            // environment {
+            //   DockerHubUser = 'raiyan'
+            // }
             steps {
                 script{
                     def dockerImageTag = env.BUILD_NUMBER
-                    BuildDocker(DockerHubUser, AppName, dockerImageTag)
+                    BuildDocker(env.DockerHubUser, AppName, dockerImageTag)
+                }
+            }
+        }
+        stage("Docker Image Scan: Trivy") {
+          when { expression { params.action == 'Create' } }
+            steps {
+                script{
+                    def dockerImageTag = env.BUILD_NUMBER
+                    DockerImageScan(env.DockerHubUser, AppName, dockerImageTag)
                 }
             }
         }
