@@ -14,6 +14,8 @@ aws_account_id = '182011186910'
 region = 'ap-southeast-1'
 ~~~
 
+**Here are the Jenkins stages:**
+
 1. Check out the Source Code
 2. Execute: 'mvn clean package'
 3. Perform the Sonar analysis 
