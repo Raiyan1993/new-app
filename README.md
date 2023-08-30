@@ -14,16 +14,19 @@
         region = 'ap-southeast-1'
 ~~~
 
-1. Checkout Source Code
-2. mvn clean package
-3. mvn sonar:sonar -Dsonar.host.url="sonar-url" -Dsonar.login="token"
-4. mvn install (deploy artifact to local maven repository)
-5. Build Docker image
-6. Scan docker image using trivy
-
-   eg, trivy image "image_name"
-
-7. Push docker image to ECR   
+1. Check out the Source Code
+2. Execute: 'mvn clean package'
+3. Perform Sonar analysis 
+~~~
+Run: mvn sonar:sonar -Dsonar.host.url='sonar-url' -Dsonar.login='token'
+~~~
+4. Execute: mvn install (to deploy the artifact to the local Maven repository)
+5. Build the Docker Image
+6. Scan the Docker Image using Trivy
+~~~
+trivy image "image_name"
+~~~
+7. Push the Docker Image to ECR
 
 **Command to Start the SonarQube Server, if SQ didn't came up**
 
