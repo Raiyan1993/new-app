@@ -10,8 +10,8 @@
 
 --> Update the Environment Variables in the Jenkinsfile with your account ID and region.
 ~~~  
-        aws_account_id = '182011186910'
-        region = 'ap-southeast-1'
+aws_account_id = '182011186910'
+region = 'ap-southeast-1'
 ~~~
 
 1. Check out the Source Code
