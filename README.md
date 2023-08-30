@@ -1,6 +1,6 @@
 # CICD-pipeline Setup
 
-**Pre-requisite**
+**Pre-requisite:**
 
 --> Install the SonarQube Scanner and Sonar Quality Gate Plugin.
 
