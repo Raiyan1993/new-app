@@ -16,7 +16,7 @@
 
 1. Check out the Source Code
 2. Execute: 'mvn clean package'
-3. Perform Sonar analysis 
+3. Perform the Sonar analysis 
 ~~~
 Run: mvn sonar:sonar -Dsonar.host.url='sonar-url' -Dsonar.login='token'
 ~~~
