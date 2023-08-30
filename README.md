@@ -28,8 +28,10 @@ trivy image "image_name"
 ~~~
 7. Push the Docker Image to ECR
 
-**Command to Start the SonarQube Server, if SQ didn't came up**
-
+**Note:**
+Command to Start the SonarQube Server, if SQ didn't came up
+~~~
 su -c '/home/sonarqube/sonarqube-9.9.1.69595/bin/linux-x86-64/sonar.sh start' sonarqube
+~~~
 
 
