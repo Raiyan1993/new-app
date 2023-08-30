@@ -2,10 +2,14 @@
 
 **Pre-requisite**
 
---> Install SonarQube Scanner plugin 
+--> Install SonarQube Scanner plugin
+
 --> Install Sonar Quality Gate plugin
+
 --> Setup SonarQube Server credentials under jenkins credentials with ID 'sonar-api'
+
 --> Setup AWS user credentials under jenkins credentials with ID "AWS_ACCESS_KEY_ID" and "AWS_SECRET_ACCESS_KEY"
+
 --> Update the environment variable in jenkinsfile with your account and region.
 ~~~  
    {
