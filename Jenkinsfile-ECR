@@ -79,6 +79,7 @@ pipeline {
             }
         }
         stage("Docker Image Cleanup") {
+          when { expression { params.action == 'Create' } }  
             steps {
                 script{
                     def dockerImageTag = env.BUILD_NUMBER
