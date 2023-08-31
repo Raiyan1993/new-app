@@ -6,7 +6,7 @@ pipeline {
 
     parameters{
         choice(name: 'action', choices: 'Create\nDelete', description: 'Choose Create/Destroy')
-        string(name: 'RepoName', defaultValue: 'myjava-app', description: 'Name of the docker repo in lower case')
+        string(name: 'RepoName', defaultValue: 'myjava-app', description: 'Make sure Image Repo is already created')
         string(name: 'aws_account_id', defaultValue: '460472097832', description: 'AWS AccountID')
         string(name: 'region', defaultValue: 'ap-southeast-1', description: 'AWS region')
     }
