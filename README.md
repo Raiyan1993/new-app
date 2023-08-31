@@ -2,6 +2,8 @@
 
 **Pre-requisite:**
 
+--> Used the following terraform code to create EC2 and install the required tools. https://github.com/Raiyan1993/terraform/tree/master/jenkins-project
+
 --> Install the SonarQube Scanner and Sonar Quality Gate Plugin.
 
 --> Configure SonarQube Server Credentials in Jenkins using the ID 'sonar-api'.
