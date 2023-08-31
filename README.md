@@ -16,6 +16,10 @@ aws_account_id = '182011186910'
 region = 'ap-southeast-1'
 ~~~
 
+--> configure the shared library in Jenkins under 'Manage Jenkins' > 'Configure System' with named "my-shared-library"(without the quotes).
+
+Note: Once you've done this, the shared library named "my-shared-library" will be configured and available for use in your Jenkins pipelines.
+
 **Here are the Jenkins stages:**
 
 1. Check out the Source Code
