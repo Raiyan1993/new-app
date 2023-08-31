@@ -10,12 +10,6 @@
 
 --> Configure AWS User Credentials in Jenkins using the IDs 'AWS_ACCESS_KEY_ID' and 'AWS_SECRET_ACCESS_KEY'.
 
---> Update the Environment Variables in the Jenkinsfile with your account ID and region.
-~~~  
-aws_account_id = '182011186910'
-region = 'ap-southeast-1'
-~~~
-
 --> configure the shared library in Jenkins under 'Manage Jenkins' > 'Configure System' with named "my-shared-library"(without the quotes).
 
 Note: Once you've done this, the shared library named "my-shared-library" will be configured and available for use in your Jenkins pipelines.
