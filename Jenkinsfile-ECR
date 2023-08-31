@@ -6,13 +6,15 @@ pipeline {
 
     parameters{
         choice(name: 'action', choices: 'Create\nDelete', description: 'Choose Create/Destroy')
-        string(name: 'AppName', defaultValue: 'myjava-app', description: 'Name of the docker image in lower case')
+        string(name: 'RepoName', defaultValue: 'myjava-app', description: 'Name of the docker repo in lower case')
+        string(name: 'aws_account_id', defaultValue: '460472097832', description: 'AWS AccountID')
+        string(name: 'region', defaultValue: 'ap-southeast-1', description: 'AWS region')
     }
 
-    environment {
-        aws_account_id = '944820253794'
-        region = 'ap-southeast-1'
-    }
+    // environment {
+    //     aws_account_id = '944820253794'
+    //     region = 'ap-southeast-1'
+    // }
 
     stages {
         stage("Unit Test maven") {
@@ -54,7 +56,7 @@ pipeline {
             steps {
                 script{
                     def dockerImageTag = env.BUILD_NUMBER
-                    BuildDocker(env.aws_account_id, "${params.AppName}", dockerImageTag, env.region)
+                    BuildDocker("${params.aws_account_id}", "${params.RepoName}", dockerImageTag, "${params.region}")
                 }
             }
         }
@@ -63,7 +65,7 @@ pipeline {
             steps {
                 script{
                     def dockerImageTag = env.BUILD_NUMBER
-                    DockerImageScan(env.aws_account_id, "${params.AppName}", dockerImageTag, env.region)
+                    DockerImageScan("${params.aws_account_id}", "${params.RepoName}", dockerImageTag, "${params.region}")
                 }
             }
         }
@@ -72,7 +74,7 @@ pipeline {
             steps {
                 script{
                     def dockerImageTag = env.BUILD_NUMBER
-                    DockerImagePush(env.aws_account_id, "${params.AppName}", dockerImageTag, env.region)
+                    DockerImagePush("${params.aws_account_id}", "${params.RepoName}", dockerImageTag, "${params.region}")
                 }
             }
         }
@@ -80,7 +82,7 @@ pipeline {
             steps {
                 script{
                     def dockerImageTag = env.BUILD_NUMBER
-                    DockerImageCleanup(env.aws_account_id, "${params.AppName}", dockerImageTag, env.region)
+                    DockerImageCleanup("${params.aws_account_id}", "${params.RepoName}", dockerImageTag, "${params.region}")
                 }
             }
         }
