@@ -69,6 +69,41 @@ pipeline {
                 }
             }
         }
+        stage('Check if ECR Repository Exists') {
+          steps {
+            script {
+                def repoExists = false
+                    // Check if the ECR repository already exists
+                try {
+                    sh """
+                      aws ecr describe-repositories --repository-names ${params.RepoName}
+                    """
+                    repoExists = true
+                } catch (Exception ex) {
+                    // Repository doesn't exist, do nothing
+                    repoExists = false
+                }
+
+                if (repoExists) {
+                    echo "ECR repository '${params.RepoName}' already exists."
+                } else {
+                    echo "ECR repository '${params.RepoName}' does not exist."
+                }
+                }
+            }
+        }
+        stage('Create ECR Repository if Not Exists') {
+            when { expression { !repoExists } }
+            steps {
+                script {
+                    // Create the ECR repository
+                    sh """
+                        aws ecr create-repository --repository-name ${params.RepoName}
+                    """
+                    echo "ECR repository '${params.RepoName}' has been created."
+                }
+            }
+        }    
         stage("Docker Image Push: ECR") {
           when { expression { params.action == 'Create' } }
             steps {
