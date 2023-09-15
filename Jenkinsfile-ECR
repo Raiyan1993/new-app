@@ -93,7 +93,7 @@ pipeline {
                 } else {
                     sh """
                     echo "Creating ECR repository '${params.RepoName}'"
-                    aws ecr create-repository --repository-name ${params.RepoName}
+                    aws ecr create-repository --repository-name ${params.RepoName} --image-tag-mutability IMMUTABLE --image-scanning-configuration scanOnPush=true
                     """
                 }
                 }
