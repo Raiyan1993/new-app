@@ -98,19 +98,7 @@ pipeline {
                 }
                 }
             }
-        }
-        // stage('Create ECR Repository if Not Exists') {
-        //     when { expression { !repoExists } }
-        //     steps {
-        //         script {
-        //             // Create the ECR repository
-        //             sh """
-        //                 aws ecr create-repository --repository-name ${params.RepoName}
-        //             """
-        //             echo "ECR repository '${params.RepoName}' has been created."
-        //         }
-        //     }
-        // }    
+        }   
         stage("Docker Image Push: ECR") {
           when { expression { params.action == 'Create' } }
             steps {
